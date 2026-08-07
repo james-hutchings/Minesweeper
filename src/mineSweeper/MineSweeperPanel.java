@@ -88,7 +88,7 @@ public class MineSweeperPanel extends JPanel implements ActionListener, MouseLis
 
 		if (button.isBomb()) {
 			revealAllBombs();
-			JOptionPane.showMessageDialog(this, "You hit a bomb! The game will now reset.");
+			JOptionPane.showMessageDialog(this, "You woke up a sleeping cat! Try again!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 			resetGame();
 		} else {
 			revealCell(row, col);
