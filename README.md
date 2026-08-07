@@ -1,6 +1,12 @@
 # Cat Minesweeper!
 
-A cat-themed Minesweeper game built with Java Swing.
+![Cat Minesweeper gameplay](CatMinesweeperScreenshot.png)
+
+A cat-themed Minesweeper game built with Java Swing. 
+
+Red cat -> Bomb
+
+Nervous cat -> Flag
 
 This project started as an old Java Minesweeper clone that I originally built while learning Java. I came back to it later to clean up the code and turn it into a more complete and maintainable project.
 
