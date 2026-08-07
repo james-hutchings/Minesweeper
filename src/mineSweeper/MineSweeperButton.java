@@ -9,14 +9,14 @@ import javax.swing.JButton;
 
 /**
  * A button in the Minesweeper game.
- *  * Written by James Hutchings, 08/07/2026
+ * * Written by James Hutchings, 08/07/2026
  */
 public class MineSweeperButton extends JButton {
 	private static final long serialVersionUID = 1L;
 
-	private static final int ICON_SIZE = 32;
-	private static final ImageIcon BOMB_ICON = loadScaledIcon("/images/bomb.jpg", ICON_SIZE, ICON_SIZE);
-	private static final ImageIcon FLAG_ICON = loadScaledIcon("/images/flag.png", ICON_SIZE, ICON_SIZE);
+	private static final int ICON_SIZE = 100;
+	private static final ImageIcon BOMB_ICON = loadScaledIcon("bomb.jpg", ICON_SIZE, ICON_SIZE);
+	private static final ImageIcon FLAG_ICON = loadScaledIcon("flag.png", ICON_SIZE, ICON_SIZE);
 
 	private final int row;
 	private final int col;
@@ -36,13 +36,17 @@ public class MineSweeperButton extends JButton {
 	}
 
 	// Loads and scales and image icon from the given resource path.
-	private static ImageIcon loadScaledIcon(String resourcePath, int width, int height) {
-		URL url = MineSweeperButton.class.getResource(resourcePath);
-		if (url == null) {
+	private static final String IMAGE_DIR = "src/main/resources/images";
+
+	private static ImageIcon loadScaledIcon(String fileName, int width, int height) {
+
+		java.io.File file = new java.io.File(IMAGE_DIR, fileName);
+		if (!file.exists()) {
+			System.out.println("Missing image file: " + file.getAbsolutePath());
 			return new ImageIcon();
 		}
 
-		ImageIcon icon = new ImageIcon(url);
+    	ImageIcon icon = new ImageIcon(file.getAbsolutePath());
 		Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaled);
 
@@ -122,5 +126,6 @@ public class MineSweeperButton extends JButton {
 
 	private void clearDisplay() {
 		setIcon(null);
+		setText("");
 	}
 }
