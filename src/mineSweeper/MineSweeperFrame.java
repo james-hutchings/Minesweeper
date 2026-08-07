@@ -1,48 +1,31 @@
 package mineSweeper;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 
-public class MineSweeperFrame extends JFrame implements ActionListener {
-	
-	JMenu gameMenu = new JMenu();
-	
-		public MineSweeperFrame() {
-			
-			this.setPreferredSize(new Dimension(900,900));
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-			MineSweeperPanel gamePanel = new MineSweeperPanel();
-			this.setContentPane(gamePanel);
-			this.pack();
-
-			
-			
-		}
-		
-		
-		
-		
-		
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+/*
+ * The main frame for the Minesweeper game.
+*/
+public class MineSweeperFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
+
+	public MineSweeperFrame() {
+		this(10, 10);
+	}
+
+	// Constructs the MineSweeperFrame with the specified number of rows and columns.
+	public MineSweeperFrame(int rows, int cols) {
+		setTitle("Minesweeper");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+
+		MineSweeperPanel gamePanel = new MineSweeperPanel(rows, cols);
+		add(gamePanel, BorderLayout.CENTER);
+
+		setPreferredSize(new Dimension(900, 900));
+		pack();
+		setLocationRelativeTo(null);
+	}
 }
