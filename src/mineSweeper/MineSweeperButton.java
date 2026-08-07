@@ -2,7 +2,8 @@ package mineSweeper;
 
 import java.awt.Font;
 import java.awt.Image;
-import java.net.URL;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,9 +15,9 @@ import javax.swing.JButton;
 public class MineSweeperButton extends JButton {
 	private static final long serialVersionUID = 1L;
 
-	private static final int ICON_SIZE = 100;
-	private static final ImageIcon BOMB_ICON = loadScaledIcon("bomb.jpg", ICON_SIZE, ICON_SIZE);
-	private static final ImageIcon FLAG_ICON = loadScaledIcon("flag.png", ICON_SIZE, ICON_SIZE);
+	private static final ImageIcon BOMB_ICON = new ImageIcon("src/main/resources/images/bomb.jpg");
+
+	private static final ImageIcon FLAG_ICON = new ImageIcon("src/main/resources/images/flag.png");
 
 	private final int row;
 	private final int col;
@@ -30,26 +31,31 @@ public class MineSweeperButton extends JButton {
 	public MineSweeperButton(int row, int col) {
 		this.row = row;
 		this.col = col;
-
-		setFont(new Font("Arial", Font.BOLD, 18));
+		setMargin(new java.awt.Insets(0, 0, 0, 0));
 		setFocusPainted(false);
+		setHorizontalAlignment(JButton.CENTER);
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				updateDisplaySize();
+			}
+		});
 	}
 
-	// Loads and scales and image icon from the given resource path.
-	private static final String IMAGE_DIR = "src/main/resources/images";
+	// Scales the icon to fit the button size while maintaining aspect ratio.
+	private ImageIcon scaleIcon(ImageIcon original) {
+		int size = Math.min(getWidth(), getHeight());
 
-	private static ImageIcon loadScaledIcon(String fileName, int width, int height) {
+		// Leave some padding around the image.
+		int iconSize = Math.max(16, (int) (size * 0.65));
 
-		java.io.File file = new java.io.File(IMAGE_DIR, fileName);
-		if (!file.exists()) {
-			System.out.println("Missing image file: " + file.getAbsolutePath());
-			return new ImageIcon();
-		}
+		Image scaled = original.getImage().getScaledInstance(
+				iconSize,
+				iconSize,
+				Image.SCALE_SMOOTH);
 
-    	ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-		Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaled);
-
 	}
 
 	public int getRow() {
@@ -94,14 +100,33 @@ public class MineSweeperButton extends JButton {
 			clearDisplay();
 			flagged = false;
 		} else {
-			setIcon(FLAG_ICON);
+			setIcon(scaleIcon(FLAG_ICON));
 			setText("");
 			flagged = true;
 		}
 	}
 
+	private void updateDisplaySize() {
+		int size = Math.min(getWidth(), getHeight());
+
+		if (size <= 0) {
+			return;
+		}
+
+		// Resize number
+		int fontSize = Math.max(8, (int) (size * 0.35));
+		setFont(new Font("Arial", Font.BOLD, fontSize));
+
+		// Resize currently displayed icon
+		if (flagged) {
+			setIcon(scaleIcon(FLAG_ICON));
+		} else if (revealed && bomb) {
+			setIcon(scaleIcon(BOMB_ICON));
+		}
+	}
+
 	public void revealBomb() {
-		setIcon(BOMB_ICON);
+		setIcon(scaleIcon(BOMB_ICON));
 		setText("");
 		revealed = true;
 		setEnabled(false);
@@ -109,8 +134,13 @@ public class MineSweeperButton extends JButton {
 
 	public void revealNumber() {
 		clearDisplay();
-		setText(bombsNear > 0 ? String.valueOf(bombsNear) : "");
 		revealed = true;
+
+		if (bombsNear > 0) {
+			setText(String.valueOf(bombsNear));
+		}
+
+		updateDisplaySize();
 		setEnabled(false);
 	}
 

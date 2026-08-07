@@ -3,6 +3,7 @@ package mineSweeper;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,6 +27,7 @@ public class MineSweeperFrame extends JFrame {
         setTitle("Minesweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+		timerLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JComboBox<Difficulty> difficultyBox = new JComboBox<>(Difficulty.values());
