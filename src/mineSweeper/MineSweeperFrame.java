@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 /*
  * The main frame for the Minesweeper game.
+ * Written by James Hutchings, 08/07/2026
 */
 public class MineSweeperFrame extends JFrame {
 	private static final long serialVersionUID = 1L;

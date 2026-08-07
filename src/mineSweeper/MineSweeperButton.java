@@ -9,6 +9,7 @@ import javax.swing.JButton;
 
 /**
  * A button in the Minesweeper game.
+ *  * Written by James Hutchings, 08/07/2026
  */
 public class MineSweeperButton extends JButton {
 	private static final long serialVersionUID = 1L;

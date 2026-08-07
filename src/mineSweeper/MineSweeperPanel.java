@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 
 /*
  * The panel that contains the Minesweeper game grid.
+ * Written by James Hutchings, 08/07/2026
 */
 public class MineSweeperPanel extends JPanel implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
