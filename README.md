@@ -2,7 +2,7 @@
 
 A cat-themed Minesweeper game built with Java Swing.
 
-This project started as an old Java Minesweeper clone that I originally built while learning Java. I came back to it later to clean up the code, fix some questionable early programming decisions, and turn it into a more complete and maintainable project.
+This project started as an old Java Minesweeper clone that I originally built while learning Java. I came back to it later to clean up the code, fix some early programming decisions, and turn it into a more complete and maintainable project.
 
 The result is classic Minesweeper, except you're trying to find the friendly cats without waking the sleeping ones.
 
