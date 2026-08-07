@@ -89,9 +89,20 @@ public class MineSweeperPanel extends JPanel implements ActionListener, MouseLis
 		if (button.isBomb()) {
 			revealAllBombs();
 			JOptionPane.showMessageDialog(this, "You woke up a sleeping cat! Try again!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+
 			resetGame();
 		} else {
 			revealCell(row, col);
+			if (hasWon()) {
+				timer.stop();
+
+				JOptionPane.showMessageDialog(
+						this,
+						"You found all the friendly cats!\nYou won in "
+								+ secondsElapsed + " seconds!");
+
+				resetGame();
+			}
 		}
 	}
 
@@ -218,6 +229,23 @@ public class MineSweeperPanel extends JPanel implements ActionListener, MouseLis
 				}
 			}
 		}
+	}
+
+	private boolean hasWon() {
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+
+				MineSweeperButton button = buttons[r][c];
+
+				// If we find any safe cell that hasn't been revealed,
+				// the game is not won yet.
+				if (!button.isBomb() && !button.isRevealed()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public void resetGame() {
